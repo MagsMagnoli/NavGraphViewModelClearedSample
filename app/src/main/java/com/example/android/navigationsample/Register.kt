@@ -17,13 +17,13 @@
 package com.example.android.navigationsample
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.navigation.Navigation
 import androidx.navigation.navGraphViewModels
 
@@ -33,21 +33,25 @@ import androidx.navigation.navGraphViewModels
  */
 class Register : Fragment() {
 
-    private val viewModel: SampleViewModel by navGraphViewModels(R.id.navigation)
+  private val viewModel: SampleViewModel by navGraphViewModels(R.id.navigation) {
+    SavedStateViewModelFactory(this)
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_register, container, false)
+  override fun onCreateView(
+      inflater: LayoutInflater, container: ViewGroup?,
+      savedInstanceState: Bundle?
+  ): View? {
+    // Inflate the layout for this fragment
+    val view = inflater.inflate(R.layout.fragment_register, container, false)
 
-        val editText = view.findViewById<EditText>(R.id.username_text).apply {
-            setText(viewModel.data.value)
-        }
-
-        view.findViewById<Button>(R.id.signup_btn).setOnClickListener {
-            viewModel.data.value = editText.text.toString()
-            Navigation.findNavController(view).navigate(R.id.action_register_to_match)
-        }
-        return view
+    val editText = view.findViewById<EditText>(R.id.username_text).apply {
+      setText(viewModel.data.value)
     }
+
+    view.findViewById<Button>(R.id.signup_btn).setOnClickListener {
+      viewModel.setData(editText.text.toString())
+      Navigation.findNavController(view).navigate(R.id.action_register_to_match)
+    }
+    return view
+  }
 }

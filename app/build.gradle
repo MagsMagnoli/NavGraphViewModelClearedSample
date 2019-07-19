@@ -75,6 +75,7 @@ dependencies {
 
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.viewmodel_ktx
+    implementation deps.lifecycle.viewmodel_savedstate
 
     implementation deps.navigation.fragment_ktx
     implementation deps.navigation.runtime_ktx

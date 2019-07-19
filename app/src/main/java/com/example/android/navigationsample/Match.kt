@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.navigation.Navigation
 import androidx.navigation.navGraphViewModels
 
@@ -30,7 +31,9 @@ import androidx.navigation.navGraphViewModels
  */
 class Match : Fragment() {
 
-  private val viewModel: SampleViewModel by navGraphViewModels(R.id.navigation)
+  private val viewModel: SampleViewModel by navGraphViewModels(R.id.navigation) {
+    SavedStateViewModelFactory(this)
+  }
 
   override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
